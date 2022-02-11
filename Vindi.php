@@ -51,59 +51,10 @@ interface CVindi{
   */
   class Vindi implements CVindi{
 
-    private $relationshipSubscription = [
-        13 => 65618,
-        12 => 65991,
-        7  => 65992,
-        6  => 65993,
-        4  => 65994,
-        2  => 65995,
-        1  => 65996,
-    ];
-    private $relationshipProduct = [
-        6702533 => 178932,
-        6702345 => 178930,
-        6702346 => 178931,
-        6703061 => 178933,
-        6703062 => 177624,
-        73861   => 178929,
-        73850   => 178928,
-        73846   => 178927,
-        73845   => 178926,
-        73842   => 178925,
-        73841   => 177763,
-        73838   => 177623,
-        13      => 177624,
-        12      => 178917,
-        7       => 178918,
-        6       => 178919,
-        4       => 178920,
-        2       => 178921,
-        1       => 178922,
-        'adesao'=> 177814,
-        "renegociacao" => 178164,
-    ];
-    private $relationshipSubscriptionProduction = [
-        13      => 273378,
-        12      => 273379,
-        7       => 273372,
-        6       => 273373,
-        4       => 273374,
-        2       => 273376,
-        1       => 273377,
-    ];
-    private $relationshipProductProduction = [
-        13      => 969551,
-        12      => 969550,
-        7       => 953994,
-        6       => 954002,
-        4       => 969548,
-        2       => 954003,
-        1       => 969541,
-    ];
+    
 
-    private $production_token = "BcwpUvd4-NVhj8FUyzMlUFoVit3zLrYsfMjoP-vnkec";
-    private $development_token = "w1EHlVedRSl49x10KcgIE3FT6LCovF3XLe1bJzkJDKA";
+    private $production_token = "";
+    private $development_token = "";
 
     private $state = 'production';
     private $url_production_api = "https://app.vindi.com.br/api/v1/";
