@@ -16,12 +16,12 @@ interface CVindi{
     public function removePaymentPerfilClient(String $data,String $route, String $method):Array;         # Remove perfil de pagamento cliente    DELETE
 
     public function createNewProduct(Array $data,String $route, String $method):Array;                  # Adiciona um novo produo a vindi       POST
-    public function createNewPlan(Array $data,String $route, String $method):Array;                  # Adiciona um novo produo a vindi       POST
+    public function createNewPlan(Array $data,String $route, String $method):Array;                     # Adiciona um novo produo a vindi       POST
 
     public function addSubscriptionClient(Array $data,String $route, String $method):Array;             # Adiciona relação assinatura cliente   POST
     public function findSubscriptionClient(String $data,String $route, String $method):Array;           # Encontra assinatura do cliente        GET
     public function removeSubscriptionClient(String $data,String $route, String $method):Array;         # Cancela assinatura                    DELETE
-    // public function reactiveSubscriptionClient(String $assinatura);     # Reativa assinatura                    POST
+    public function reactiveSubscriptionClient(Array $data,String $route, String $method):Array;              # Reativa assinatura                    POST
     // public function renewSubscriptionClient(String $assinatura);        # Renova assinatura                     POST
 
     public function addItem(Array $data,String $route, String $method):Array;                           # Adiciona item á assinatura            POST
@@ -48,77 +48,72 @@ interface CVindi{
   * @version    0.1.6 <alpha>
   * @author     Felipe Rico Gazapina <https://github.com/FelipeGazapina>
   * @link       https://vindi.github.io/api-docs/dist/#/
-  * @link       https://github.com/FelipeGazapina/VINDI
   */
   class Vindi implements CVindi{
 
-    // private $relationshipSubscription = [
-    //     13 => 65618,
-    //     12 => 65991,
-    //     7  => 65992,
-    //     6  => 65993,
-    //     4  => 65994,
-    //     2  => 65995,
-    //     1  => 65996,
-    // ];
-    // private $relationshipProduct = [
-    //     6702533 => 178932,
-    //     6702345 => 178930,
-    //     6702346 => 178931,
-    //     6703061 => 178933,
-    //     6703062 => 177624,
-    //     73861   => 178929,
-    //     73850   => 178928,
-    //     73846   => 178927,
-    //     73845   => 178926,
-    //     73842   => 178925,
-    //     73841   => 177763,
-    //     73838   => 177623,
-    //     13      => 177624,
-    //     12      => 178917,
-    //     7       => 178918,
-    //     6       => 178919,
-    //     4       => 178920,
-    //     2       => 178921,
-    //     1       => 178922,
-    //     'adesao'=> 177814,
-    //     "renegociacao" => 178164,
-    // ];
-    // private $relationshipProductProduction = [
-    //     6702533 => 178932,
-    //     6702345 => 178930,
-    //     6702346 => 178931,
-    //     6703061 => 954000,
-    //     6703062 => 177624,
-    //     73861   => 178929,
-    //     73850   => 954001,
-    //     73846   => 178927,
-    //     73845   => 178926,
-    //     73842   => 178925,
-    //     73841   => 177763,
-    //     73838   => 953989,
-    //     13      => 177624,
-    //     12      => 178917,
-    //     7       => 953994,
-    //     6       => 954002,
-    //     4       => 178920,
-    //     2       => 954003,
-    //     1       => 178922,
-    //     'adesao'=> 953979,
-    //     "renegociacao" => 178164,
-    // ];
+    private $relationshipSubscription = [
+        13 => 65618,
+        12 => 65991,
+        7  => 65992,
+        6  => 65993,
+        4  => 65994,
+        2  => 65995,
+        1  => 65996,
+    ];
+    private $relationshipProduct = [
+        6702533 => 178932,
+        6702345 => 178930,
+        6702346 => 178931,
+        6703061 => 178933,
+        6703062 => 177624,
+        73861   => 178929,
+        73850   => 178928,
+        73846   => 178927,
+        73845   => 178926,
+        73842   => 178925,
+        73841   => 177763,
+        73838   => 177623,
+        13      => 177624,
+        12      => 178917,
+        7       => 178918,
+        6       => 178919,
+        4       => 178920,
+        2       => 178921,
+        1       => 178922,
+        'adesao'=> 177814,
+        "renegociacao" => 178164,
+    ];
+    private $relationshipSubscriptionProduction = [
+        13      => 273378,
+        12      => 273379,
+        7       => 273372,
+        6       => 273373,
+        4       => 273374,
+        2       => 273376,
+        1       => 273377,
+    ];
+    private $relationshipProductProduction = [
+        13      => 969551,
+        12      => 969550,
+        7       => 953994,
+        6       => 954002,
+        4       => 969548,
+        2       => 954003,
+        1       => 969541,
+    ];
 
-    private $production_token = $_ENV['API_TOKEN'];
-    private $development_token = $_ENV['SANDBOX_TOKEN'];
+    private $production_token = "BcwpUvd4-NVhj8FUyzMlUFoVit3zLrYsfMjoP-vnkec";
+    private $development_token = "w1EHlVedRSl49x10KcgIE3FT6LCovF3XLe1bJzkJDKA";
 
-    private $state = $_ENV['STATE'];
-    private $url_production_api = $_ENV['PRODUCTION_URL'];
-    private $url_development_api = $_ENV['DEVELOPMENT_URL'];
+    private $state = 'production';
+    private $url_production_api = "https://app.vindi.com.br/api/v1/";
+    private $url_development_api = "https://sandbox-app.vindi.com.br/api/v1/";
 
     public function __construct(){
-        if($this->state == 'development')
+        if($this->state == 'development'){
             $this->production_token = NULL;
             $this->url_production_api = NULL;
+        }    
     }
 
     /**
@@ -301,7 +296,6 @@ interface CVindi{
                 "dados" => $resp
             ];
         }
-
         if ($err) {
         return $err;
         } else {
@@ -618,11 +612,12 @@ interface CVindi{
         return $resp;
         }
     }
+    
     /**
      * Remover assinatura do cliente
      *
      * @param String data $subscription_id
-     * @param String route ["payment_profiles/{id}"]
+     * @param String route ["subscriptions/{id}"]
      * @param String method ["DELETE"]
      * 
      * 
@@ -657,6 +652,46 @@ interface CVindi{
         } else {
         return $resp;
         }
+    }
+
+    /**
+     * Esta função reativa a assinatura do cliente
+     *
+     * @param Array $data [id_assinatura]
+     * @param String $route ["subscriptions/{id}/reactivate"]
+     * @param String $method POST
+     * @return Array
+     */
+    public function reactiveSubscriptionClient(Array $data,String $route, String $method):Array{
+        # PASSANDO DE ARRAY PARA JSON
+        $post = json_encode($data);
+        $curl = curl_init();
+
+        $curl = $this->set_post($curl,$post,$route,$method);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        $resp = (array) $response;
+        $resp = json_decode($resp[0]);
+        curl_close($curl);
+
+        if(isset($resp->errors)){
+            $err = ["status"=>500,"errors"=>$resp];
+        }else{
+            $resp = [
+                "status"=>200,
+                "message"=> "Seu pedido foi realizado com sucesso. (Verifique seu email)",
+                "dados" => $resp
+            ];
+        }
+        
+        if ($err) {
+        return $err;
+        } else {
+        return $resp;
+        }
+
     }
 
     /**
@@ -1000,10 +1035,10 @@ interface CVindi{
      */
     private function set_post($curl,String $post,String $route, String $method){
         curl_setopt_array($curl, [
-            CURLOPT_URL => $this->url_development_api . $route,
+            CURLOPT_URL => $this->url_production_api . $route,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_USERPWD => $this->development_token . ":",        
+            CURLOPT_USERPWD => $this->production_token . ":",        
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POSTFIELDS => $post,
@@ -1026,10 +1061,10 @@ interface CVindi{
      */
     private function set_get($curl,String $data,String $route, String $method){
         curl_setopt_array($curl, [
-            CURLOPT_URL => $this->url_development_api . $route . $data,
+            CURLOPT_URL => $this->url_production_api . $route . $data,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_USERPWD => $this->development_token . ":",        
+            CURLOPT_USERPWD => $this->production_token . ":",        
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_HTTPHEADER => [
@@ -1048,8 +1083,8 @@ interface CVindi{
      * @return Int assinatura nº assinatura vindi
      */
     public function getSubscriptionRelationship(String $plano):Int{
-        if(array_key_exists($plano,$this->relationshipProduct)){
-            return $this->relationshipSubscription[$plano];
+        if(array_key_exists($plano,$this->relationshipSubscriptionProduction)){
+            return $this->relationshipSubscriptionProduction[$plano];
         }
 		$CI =& get_instance();
         $result = $CI->planos->primeiro($plano);
@@ -1067,8 +1102,8 @@ interface CVindi{
      * @return Int produto nº produto vindi
      */
     public function getProductRelationship(String $cliente_contrato_produto):Int{
-        if(array_key_exists($cliente_contrato_produto,$this->relationshipProduct)){
-            return $this->relationshipProduct[$cliente_contrato_produto];
+        if(array_key_exists($cliente_contrato_produto,$this->relationshipProductProduction)){
+            return $this->relationshipProductProduction[$cliente_contrato_produto];
         }
 
 		$CI =& get_instance();
